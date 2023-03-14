@@ -1,5 +1,5 @@
 import { DisplaySettings } from "@mui/icons-material";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Controller, useForm, useFormState } from "react-hook-form";
 
@@ -23,6 +23,14 @@ const LoginFormComponent = (props: IFieldsAuth) => {
     reset();
   };
 
+  <Typography
+  variant="h4"
+  component="h4"
+  gutterBottom={true}
+  className="auth"
+>
+  h1. Heading
+</Typography>
   return (
     <>
       <form>
