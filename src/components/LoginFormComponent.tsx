@@ -1,3 +1,4 @@
+import { DisplaySettings } from "@mui/icons-material";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { Controller, useForm, useFormState } from "react-hook-form";
@@ -10,24 +11,68 @@ interface IFieldsAuth {
 
 const LoginFormComponent = (props: IFieldsAuth) => {
   const { login, password, confirmPassword } = props;
-  const [fieldsState, setFieldState] = useState<IFieldsAuth | null>(null);
-  const { register, handleSubmit, reset, control } = useForm();
+
+  const [dataForm, setDataForm] = useState<IFieldsAuth | null>(null);
+
+  const { handleSubmit, reset, control } = useForm();
   const { errors } = useFormState({ control });
-  const onSubmit = (data: any) => console.log(data);
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+    setDataForm(data);
+    reset();
+  };
 
   return (
     <>
-      <form onClick={handleSubmit(onSubmit)}>
+      <form>
         <Controller
           name={"login"}
           control={control}
           rules={{ required: true }}
           render={({ field: { onChange, value } }) => (
             <TextField
-              style={{ width: "300px" }}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                alignContent: "center",
+                alignItems: "flex-start"
+             
+                // display: "flex",
+                // flexDirection: "row",
+                // justifyContent: "center",
+                // alignContent:"center",
+              
+                // flexWrap:"wrap"
+              }}
               onChange={onChange}
               value={value}
               label={"login"}
+              // errors={errors && errors.message}
+              // helperText={errors && errors.message}
+            />
+          )}
+        />
+        <Controller
+          name={"password"}
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, value } }) => (
+            <TextField
+              sx={{
+                width: "300px",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "end",
+                alignContent: "center",
+              }}
+              type="password"
+              autoComplete="current-password"
+              onChange={onChange}
+              value={value}
+              label={"password"}
               // error={errors && errors.message}
               // helperText={errors && errors.message}
             />
@@ -35,9 +80,6 @@ const LoginFormComponent = (props: IFieldsAuth) => {
         />
         <div>
           <Button onClick={handleSubmit(onSubmit)}>Register</Button>
-          <Button onClick={() => reset()} variant={"outlined"}>
-            Reset
-          </Button>
         </div>
       </form>
     </>
