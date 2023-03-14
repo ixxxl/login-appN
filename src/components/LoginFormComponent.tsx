@@ -24,6 +24,7 @@ const LoginFormComponent = (props: IFieldsAuth) => {
           rules={{ required: true }}
           render={({ field: { onChange, value } }) => (
             <TextField
+              style={{ width: "300px" }}
               onChange={onChange}
               value={value}
               label={"login"}
