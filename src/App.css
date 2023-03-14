@@ -42,7 +42,7 @@
   background: no-repeat url(../public/low_poly_banner_design_1711.jpg);
 }
 .auth-form {
-  width: 50vh;
+  width: 100vh;
   height: 100vh;
   background-color: bisque;
   padding: 20px;

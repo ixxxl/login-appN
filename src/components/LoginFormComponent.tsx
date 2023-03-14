@@ -1,7 +1,16 @@
 import { DisplaySettings } from "@mui/icons-material";
 import { Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { Controller, useForm, useFormState } from "react-hook-form";
+import {
+  Controller,
+  SubmitHandler,
+  useForm,
+  useFormState,
+} from "react-hook-form";
+import {
+  loginFormValidation,
+  passwordFormValidation,
+} from "./LoginFormValidation";
 
 interface IFieldsAuth {
   login: string;
@@ -10,17 +19,13 @@ interface IFieldsAuth {
 }
 
 const LoginFormComponent = (props: IFieldsAuth) => {
-  const { login, password, confirmPassword } = props;
-
-  const [dataForm, setDataForm] = useState<IFieldsAuth | null>(null);
-
-  const { handleSubmit, reset, control } = useForm();
+  const { handleSubmit, reset, control } = useForm<IFieldsAuth>({
+    mode: "onBlur",
+  });
   const { errors } = useFormState({ control });
 
-  const onSubmit = (data: any) => {
+  const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
     console.log(data);
-    setDataForm(data);
-    reset();
   };
 
   return (
@@ -37,81 +42,46 @@ const LoginFormComponent = (props: IFieldsAuth) => {
         Чтобы получить доступ
       </Typography>
       <form className="auth-form__form">
-        <TextField
-          label="login"
-          size="small"
-          sx={{ marginTop: 2 }}
-          fullWidth={true}
+        <Controller
+          control={control}
+          name="login"
+          rules={loginFormValidation}
+          render={({ field }) => (
+            <TextField
+              label="login"
+              size="small"
+              helperText={errors.login && errors.login?.message}
+              error={!!errors.login?.message}
+              fullWidth={true}
+              onChange={(e) => field.onChange(e)}
+              value={field.value}
+            />
+          )}
         />
-        <TextField
-          label="password"
-          type="password"
-          size="small"
-          sx={{ marginTop: 2 }}
-          fullWidth={true}
+        <Controller
+          control={control}
+          name="password"
+          rules={passwordFormValidation}
+          render={({ field }) => (
+            <TextField
+              label="password"
+              type="password"
+              size="small"
+              sx={{ marginTop: 2 }}
+              fullWidth={true}
+              onChange={(e) => field.onChange(e)}
+              value={field.value}
+              error={!!errors.password?.message}
+              helperText={errors.password && errors.password?.message}
+            />
+          )}
         />
+
         <Button type="submit" onClick={handleSubmit(onSubmit)}>
           Войти
         </Button>
       </form>
     </div>
-    // <form>
-    //   <Controller
-    //     name={"login"}
-    //     control={control}
-    //     rules={{ required: true }}
-    //     render={({ field: { onChange, value } }) => (
-    //       <TextField
-    //         style={{
-    //           display: "flex",
-    //           flexDirection: "row",
-    //           flexWrap: "wrap",
-    //           justifyContent: "center",
-    //           alignContent: "center",
-    //           alignItems: "flex-start"
-
-    //           // display: "flex",
-    //           // flexDirection: "row",
-    //           // justifyContent: "center",
-    //           // alignContent:"center",
-
-    //           // flexWrap:"wrap"
-    //         }}
-    //         onChange={onChange}
-    //         value={value}
-    //         label={"login"}
-    //         // errors={errors && errors.message}
-    //         // helperText={errors && errors.message}
-    //       />
-    //     )}
-    //   />
-    //   <Controller
-    //     name={"password"}
-    //     control={control}
-    //     rules={{ required: true }}
-    //     render={({ field: { onChange, value } }) => (
-    //       <TextField
-    //         sx={{
-    //           width: "300px",
-    //           display: "flex",
-    //           flexDirection: "row",
-    //           justifyContent: "end",
-    //           alignContent: "center",
-    //         }}
-    //         type="password"
-    //         autoComplete="current-password"
-    //         onChange={onChange}
-    //         value={value}
-    //         label={"password"}
-    //         // error={errors && errors.message}
-    //         // helperText={errors && errors.message}
-    //       />
-    //     )}
-    //   />
-    //   <div>
-    //     <Button onClick={handleSubmit(onSubmit)}>Register</Button>
-    //   </div>
-    // </form>
   );
 };
 
