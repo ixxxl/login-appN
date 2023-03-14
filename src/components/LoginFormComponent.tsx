@@ -23,74 +23,95 @@ const LoginFormComponent = (props: IFieldsAuth) => {
     reset();
   };
 
-  <Typography
-  variant="h4"
-  component="h4"
-  gutterBottom={true}
-  className="auth"
->
-  h1. Heading
-</Typography>
   return (
-    <>
-      <form>
-        <Controller
-          name={"login"}
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "center",
-                alignContent: "center",
-                alignItems: "flex-start"
-             
-                // display: "flex",
-                // flexDirection: "row",
-                // justifyContent: "center",
-                // alignContent:"center",
-              
-                // flexWrap:"wrap"
-              }}
-              onChange={onChange}
-              value={value}
-              label={"login"}
-              // errors={errors && errors.message}
-              // helperText={errors && errors.message}
-            />
-          )}
+    <div className="auth-form">
+      <Typography variant="h4" component="h4" className="auth">
+        Войдите
+      </Typography>
+      <Typography
+        variant="subtitle1"
+        component="div"
+        gutterBottom={true}
+        className="auth-form_subtitle"
+      >
+        Чтобы получить доступ
+      </Typography>
+      <form className="auth-form__form">
+        <TextField
+          label="login"
+          size="small"
+          sx={{ marginTop: 2 }}
+          fullWidth={true}
         />
-        <Controller
-          name={"password"}
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              sx={{
-                width: "300px",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "end",
-                alignContent: "center",
-              }}
-              type="password"
-              autoComplete="current-password"
-              onChange={onChange}
-              value={value}
-              label={"password"}
-              // error={errors && errors.message}
-              // helperText={errors && errors.message}
-            />
-          )}
+        <TextField
+          label="password"
+          type="password"
+          size="small"
+          sx={{ marginTop: 2 }}
+          fullWidth={true}
         />
-        <div>
-          <Button onClick={handleSubmit(onSubmit)}>Register</Button>
-        </div>
+        <Button type="submit" onClick={handleSubmit(onSubmit)}>
+          Войти
+        </Button>
       </form>
-    </>
+    </div>
+    // <form>
+    //   <Controller
+    //     name={"login"}
+    //     control={control}
+    //     rules={{ required: true }}
+    //     render={({ field: { onChange, value } }) => (
+    //       <TextField
+    //         style={{
+    //           display: "flex",
+    //           flexDirection: "row",
+    //           flexWrap: "wrap",
+    //           justifyContent: "center",
+    //           alignContent: "center",
+    //           alignItems: "flex-start"
+
+    //           // display: "flex",
+    //           // flexDirection: "row",
+    //           // justifyContent: "center",
+    //           // alignContent:"center",
+
+    //           // flexWrap:"wrap"
+    //         }}
+    //         onChange={onChange}
+    //         value={value}
+    //         label={"login"}
+    //         // errors={errors && errors.message}
+    //         // helperText={errors && errors.message}
+    //       />
+    //     )}
+    //   />
+    //   <Controller
+    //     name={"password"}
+    //     control={control}
+    //     rules={{ required: true }}
+    //     render={({ field: { onChange, value } }) => (
+    //       <TextField
+    //         sx={{
+    //           width: "300px",
+    //           display: "flex",
+    //           flexDirection: "row",
+    //           justifyContent: "end",
+    //           alignContent: "center",
+    //         }}
+    //         type="password"
+    //         autoComplete="current-password"
+    //         onChange={onChange}
+    //         value={value}
+    //         label={"password"}
+    //         // error={errors && errors.message}
+    //         // helperText={errors && errors.message}
+    //       />
+    //     )}
+    //   />
+    //   <div>
+    //     <Button onClick={handleSubmit(onSubmit)}>Register</Button>
+    //   </div>
+    // </form>
   );
 };
 

@@ -36,3 +36,26 @@
     transform: rotate(360deg);
   }
 }
+
+.auth-page {
+  height: 100vh;
+  background: no-repeat url(../public/low_poly_banner_design_1711.jpg);
+}
+.auth-form {
+  width: 50vh;
+  height: 100vh;
+  background-color: bisque;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-form_subtitle {
+  color: rgb(100, 180, 180);
+}
+
+.auth-form__form {
+  width: 360px;
+}
