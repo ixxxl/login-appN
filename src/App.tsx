@@ -1,17 +1,14 @@
 import React from "react";
 
 import "./App.css";
+import { AuthPage } from "./components/authPageComponent";
 import LoginFormComponent from "./components/LoginFormComponent";
 
 function App() {
   return (
     <div className="App">
-      {/* <a href="/login">Login Page</a>
-
-      <Routes>
-        <Route path="./LoginFormComponents" element={LoginFormComponent} />
-      </Routes> */}
-      <LoginFormComponent login="" password="" confirmPassword="" />
+      <AuthPage />
+      {/* <LoginFormComponent login="" password="" confirmPassword="" /> */}
     </div>
   );
 }
