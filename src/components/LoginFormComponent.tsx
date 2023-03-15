@@ -1,5 +1,6 @@
 import { DisplaySettings } from "@mui/icons-material";
 import { Button, TextField, Typography } from "@mui/material";
+import axios from "axios";
 import { useState } from "react";
 import {
   Controller,
@@ -7,6 +8,7 @@ import {
   useForm,
   useFormState,
 } from "react-hook-form";
+import { axiosData } from "../models/dataModels";
 import {
   loginFormValidation,
   passwordFormValidation,
@@ -20,13 +22,38 @@ interface IFieldsAuth {
 
 const LoginFormComponent = (props: IFieldsAuth) => {
   const { handleSubmit, reset, control } = useForm<IFieldsAuth>({
-    mode: "onChange",
+    mode: "onBlur",
   });
 
   const { errors } = useFormState({ control });
 
   const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
     console.log(data);
+  };
+
+  // const postUser = async () => {
+  //   try {
+  //     const response: any = await axios.post("http://localhost:3030/users/");
+
+  //     response.data;
+  //   } catch (error: any) {
+  //     console.log(error.message);
+  //   }
+  // };
+
+  const onSubmitRegistration: SubmitHandler<IFieldsAuth> = (data) => {
+    axiosData(data)
+    // async () => {
+    //   try {
+    //     const response: any = await axios.get("http://localhost:3030/users");
+
+    //     if (response.data.login === data.login) {
+    //     }
+    //   } catch (error: any) {
+    //     console.log(error.message);
+    //   }
+    // };
+    // console.log(data);
   };
 
   return (
@@ -56,6 +83,7 @@ const LoginFormComponent = (props: IFieldsAuth) => {
               fullWidth={true}
               onChange={(e) => field.onChange(e)}
               value={field.value}
+              onBlur={field.onBlur}
             />
           )}
         />
@@ -74,12 +102,16 @@ const LoginFormComponent = (props: IFieldsAuth) => {
               value={field.value}
               error={!!errors.password?.message}
               helperText={errors.password && errors.password?.message}
+              onBlur={field.onBlur}
             />
           )}
         />
 
         <Button type="submit" onClick={handleSubmit(onSubmit)}>
           Войти
+        </Button>
+        <Button type="submit" onClick={handleSubmit(onSubmitRegistration)}>
+          Зарегистрироваться
         </Button>
       </form>
     </div>
