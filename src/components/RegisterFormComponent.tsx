@@ -20,7 +20,7 @@ interface IFieldsAuth {
   confirmPassword: string;
 }
 
-const LoginFormComponent = (props: IFieldsAuth) => {
+const RegisterFormComponent = () => {
   const { handleSubmit, reset, control } = useForm<IFieldsAuth>({
     mode: "onBlur",
   });
@@ -55,7 +55,7 @@ const LoginFormComponent = (props: IFieldsAuth) => {
   return (
     <div className="auth-form">
       <Typography variant="h4" component="h4" className="auth">
-        Войдите
+        Зарегистрируйтесь
       </Typography>
       <Typography
         variant="subtitle1"
@@ -102,13 +102,33 @@ const LoginFormComponent = (props: IFieldsAuth) => {
             />
           )}
         />
-
+        <Controller
+          control={control}
+          name="confirmPassword"
+          rules={passwordFormValidation}
+          render={({ field }) => (
+            <TextField
+              label="confirm password"
+              type="password"
+              size="small"
+              sx={{ marginTop: 2 }}
+              helperText={
+                errors.confirmPassword && errors.confirmPassword?.message
+              }
+              error={!!errors.login?.message}
+              fullWidth={true}
+              onChange={(e) => field.onChange(e)}
+              value={field.value}
+              onBlur={field.onBlur}
+            />
+          )}
+        />
         <Button type="submit" onClick={handleSubmit(onSubmit)}>
-          Войти
+          Зарегистрироваться
         </Button>
       </form>
     </div>
   );
 };
 
-export default LoginFormComponent;
+export default RegisterFormComponent;

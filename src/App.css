@@ -48,7 +48,7 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -58,4 +58,14 @@
 
 .auth-form__form {
   width: 360px;
+}
+.auth-btn {
+  width: 100vh;
+  height: 10;
+  background-color: bisque;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
