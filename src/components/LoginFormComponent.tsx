@@ -42,18 +42,14 @@ const LoginFormComponent = (props: IFieldsAuth) => {
   // };
 
   const onSubmitRegistration: SubmitHandler<IFieldsAuth> = (data) => {
-    axiosData(data)
     // async () => {
     //   try {
     //     const response: any = await axios.get("http://localhost:3030/users");
-
-    //     if (response.data.login === data.login) {
-    //     }
+    //     console.log(response.data);
     //   } catch (error: any) {
     //     console.log(error.message);
     //   }
     // };
-    // console.log(data);
   };
 
   return (
