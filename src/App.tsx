@@ -1,7 +1,8 @@
 import React from "react";
 
 import "./App.css";
-import { AuthPage } from "./components/authPageComponent";
+import { AuthPage } from "./components/AuthPage";
+
 import LoginFormComponent from "./components/LoginFormComponent";
 
 function App() {

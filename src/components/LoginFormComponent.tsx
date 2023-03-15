@@ -10,7 +10,7 @@ import {
 import {
   loginFormValidation,
   passwordFormValidation,
-} from "./LoginFormValidation";
+} from "./FormValidationComponent";
 
 interface IFieldsAuth {
   login: string;
@@ -20,7 +20,7 @@ interface IFieldsAuth {
 
 const LoginFormComponent = (props: IFieldsAuth) => {
   const { handleSubmit, reset, control } = useForm<IFieldsAuth>({
-    mode: "onBlur",
+    mode: "onChange",
   });
   const { errors } = useFormState({ control });
 
