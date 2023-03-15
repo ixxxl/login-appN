@@ -22,6 +22,7 @@ const LoginFormComponent = (props: IFieldsAuth) => {
   const { handleSubmit, reset, control } = useForm<IFieldsAuth>({
     mode: "onChange",
   });
+
   const { errors } = useFormState({ control });
 
   const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
