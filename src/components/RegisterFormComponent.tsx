@@ -1,7 +1,7 @@
 import { DisplaySettings } from "@mui/icons-material";
 import { Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Controller,
   SubmitHandler,
@@ -21,11 +21,13 @@ interface IFieldsAuth {
 }
 
 const RegisterFormComponent = () => {
-  const { handleSubmit, reset, control } = useForm<IFieldsAuth>({
+  const { handleSubmit, reset, control, watch } = useForm<IFieldsAuth>({
     mode: "onBlur",
   });
 
   const { errors } = useFormState({ control });
+
+  const [formDataState, setFormDataState] = useState<IFieldsAuth | null>(null);
 
   const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
     console.log(data);
@@ -41,15 +43,22 @@ const RegisterFormComponent = () => {
   //   }
   // };
 
+  useEffect(() => {
+    if (formDataState) {
+      async () => {
+        try {
+          const response: any = await axios.get("http://localhost:3030/users");
+          console.log(response.data);
+        } catch (error: any) {
+          console.log(error.message);
+        }
+      };
+    }
+  }, [formDataState]);
+
   const onSubmitRegistration: SubmitHandler<IFieldsAuth> = (data) => {
-    // async () => {
-    //   try {
-    //     const response: any = await axios.get("http://localhost:3030/users");
-    //     console.log(response.data);
-    //   } catch (error: any) {
-    //     console.log(error.message);
-    //   }
-    // };
+    setFormDataState(data);
+    console.log(data);
   };
 
   return (
@@ -63,7 +72,7 @@ const RegisterFormComponent = () => {
         gutterBottom={true}
         className="auth-form_subtitle"
       >
-        Чтобы получить доступ
+        Чтобы создать учетную запись
       </Typography>
       <form className="auth-form__form">
         <Controller
@@ -105,7 +114,14 @@ const RegisterFormComponent = () => {
         <Controller
           control={control}
           name="confirmPassword"
-          rules={passwordFormValidation}
+          rules={{
+            required: "обязательно для заполнения ",
+            validate: (val: string) => {
+              if (watch("password") != val) {
+                return "Пароль не сопадает";
+              }
+            },
+          }}
           render={({ field }) => (
             <TextField
               label="confirm password"
@@ -115,7 +131,7 @@ const RegisterFormComponent = () => {
               helperText={
                 errors.confirmPassword && errors.confirmPassword?.message
               }
-              error={!!errors.login?.message}
+              error={!!errors.confirmPassword?.message}
               fullWidth={true}
               onChange={(e) => field.onChange(e)}
               value={field.value}
