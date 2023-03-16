@@ -1,3 +1,5 @@
+import { Pattern } from "@mui/icons-material";
+
 const requiredField = "Обязательно для заполнения";
 
 export const loginFormValidation = {
@@ -16,6 +18,8 @@ export const passwordFormValidation = {
     if (value.length < 6) {
       return "Пароль должен быть длинее 6 символов";
     }
+   
     return true;
   },
+  pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
 };

@@ -41,7 +41,7 @@ export const AuthPage: React.FC = () => {
         </Button>
       </div>
       <Routes>
-        <Route path="/" element={<AuthPage />} />
+        {/* <Route path="/" element={<AuthPage />} /> */}
         <Route
           path="/login"
           element={
