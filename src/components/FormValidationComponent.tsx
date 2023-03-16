@@ -10,6 +10,11 @@ export const loginFormValidation = {
     }
     return true;
   },
+  pattern: {
+    value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+    message:
+      "Неправильный формат email. Example: name.surname@google.com",
+  },
 };
 
 export const passwordFormValidation = {
@@ -18,8 +23,13 @@ export const passwordFormValidation = {
     if (value.length < 6) {
       return "Пароль должен быть длинее 6 символов";
     }
-   
+
     return true;
   },
-  pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+  pattern: {
+    value:
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+    message:
+      "Минимумальные требования: 6 знаков, одна заглавная буква, одно число и один символ",
+  },
 };
