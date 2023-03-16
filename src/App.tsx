@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 
 import "./App.css";
 import { AuthPage } from "./components/AuthPage";
@@ -9,7 +10,6 @@ function App() {
   return (
     <div className="App">
       <AuthPage />
-      {/* <LoginFormComponent login="" password="" confirmPassword="" /> */}
     </div>
   );
 }

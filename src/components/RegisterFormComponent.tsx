@@ -43,18 +43,18 @@ const RegisterFormComponent = () => {
   //   }
   // };
 
-  useEffect(() => {
-    if (formDataState) {
-      async () => {
-        try {
-          const response: any = await axios.get("http://localhost:3030/users");
-          console.log(response.data);
-        } catch (error: any) {
-          console.log(error.message);
-        }
-      };
-    }
-  }, [formDataState]);
+  // useEffect(() => {
+  //   if (formDataState) {
+  //     async () => {
+  //       try {
+  //         const response: any = await axios.get("http://localhost:3030/users");
+  //         console.log(response.data);
+  //       } catch (error: any) {
+  //         console.log(error.message);
+  //       }
+  //     };
+  //   }
+  // }, [formDataState]);
 
   const onSubmitRegistration: SubmitHandler<IFieldsAuth> = (data) => {
     setFormDataState(data);
