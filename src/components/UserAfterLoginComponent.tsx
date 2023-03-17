@@ -1,1 +1,4 @@
-  export const UserAfterComponent=()=>{}
+export const UserAfterComponent = () => {
+  return <>
+  User CHAT</>;
+};

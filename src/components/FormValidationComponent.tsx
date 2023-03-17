@@ -8,6 +8,7 @@ export const loginFormValidation = {
     if (value.match(/[а-яА-Я]/)) {
       return "Логин только на английском";
     }
+    
     return true;
   },
   pattern: {

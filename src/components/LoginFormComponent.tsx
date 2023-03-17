@@ -13,6 +13,7 @@ import {
   loginFormValidation,
   passwordFormValidation,
 } from "./FormValidationComponent";
+import { UserAfterComponent } from "./UserAfterLoginComponent";
 
 interface IFieldsAuth {
   login: string;
@@ -24,32 +25,29 @@ const LoginFormComponent = (props: IFieldsAuth) => {
   const { handleSubmit, reset, control } = useForm<IFieldsAuth>({
     mode: "onBlur",
   });
+  const [loginCurrentUser, setLoginCurrentUser] = useState<boolean>();
 
   const { errors } = useFormState({ control });
 
   const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
-    console.log(data);
-  };
+    let currentUser: string;
+    const method = "GET";
+    const url = "http://localhost:3030/users/";
+    const get = { method, url };
+    axiosData(get).then((responseData) => {
+      responseData.data.map((user: any) => {
+        if (user.login === data.login) {
+          currentUser = user.login;
+        }
+      });
 
-  // const postUser = async () => {
-  //   try {
-  //     const response: any = await axios.post("http://localhost:3030/users/");
-
-  //     response.data;
-  //   } catch (error: any) {
-  //     console.log(error.message);
-  //   }
-  // };
-
-  const onSubmitRegistration: SubmitHandler<IFieldsAuth> = (data) => {
-    // async () => {
-    //   try {
-    //     const response: any = await axios.get("http://localhost:3030/users");
-    //     console.log(response.data);
-    //   } catch (error: any) {
-    //     console.log(error.message);
-    //   }
-    // };
+      if (currentUser === data.login) {
+        setLoginCurrentUser(true);
+      } else {
+        //User not found.Please register
+        setLoginCurrentUser(false);
+      }
+    });
   };
 
   return (
@@ -102,11 +100,17 @@ const LoginFormComponent = (props: IFieldsAuth) => {
             />
           )}
         />
-
         <Button type="submit" onClick={handleSubmit(onSubmit)}>
           Войти
         </Button>
       </form>
+      {loginCurrentUser === true ? (
+        <UserAfterComponent />
+      ) : loginCurrentUser === false ? (
+        "Пользователь не найден. Заргеистрируйтесь"
+      ) : (
+        ""
+      )}
     </div>
   );
 };

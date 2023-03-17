@@ -23,12 +23,7 @@ export const AuthPage: React.FC = () => {
       </div>
       <Routes>
         <Route path="/" element={<FormComponent />} />
-        <Route
-          path="/login"
-          element={
-            <LoginFormComponent login="" password="" confirmPassword="" />
-          }
-        />
+        <Route path="/login" element={<LoginFormComponent login="" password="" confirmPassword="" />} />
         <Route path="/register" element={<RegisterFormComponent />} />
       </Routes>
       {/* <Outlet /> */}
