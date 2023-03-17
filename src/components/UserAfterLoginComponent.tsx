@@ -31,3 +31,4 @@ export const UserAfterComponent = () => {
     </div>
   );
 };
+//https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL
