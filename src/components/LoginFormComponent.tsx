@@ -31,6 +31,7 @@ const LoginFormComponent = (props: IFieldsAuth) => {
 
   const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
     let currentUser: string;
+    let currentUserPassword: string;
     const method = "GET";
     const url = "http://localhost:3030/users/";
     const get = { method, url };
@@ -38,10 +39,11 @@ const LoginFormComponent = (props: IFieldsAuth) => {
       responseData.data.map((user: any) => {
         if (user.login === data.login) {
           currentUser = user.login;
+          currentUserPassword = user.password;
         }
       });
 
-      if (currentUser === data.login) {
+      if (currentUser === data.login && currentUserPassword === data.password) {
         setLoginCurrentUser(true);
       } else {
         //User not found.Please register
@@ -107,7 +109,7 @@ const LoginFormComponent = (props: IFieldsAuth) => {
       {loginCurrentUser === true ? (
         <UserAfterComponent />
       ) : loginCurrentUser === false ? (
-        "Пользователь не найден. Заргеистрируйтесь"
+        "Пользователь не найден или пароль неверный . Зарегистрируйтесь"
       ) : (
         ""
       )}
