@@ -14,7 +14,7 @@ export const axiosData = async (value: IAxios) => {
       url: value.url,
       data: value.data ? value.data : null,
     });
-    console.log(response);
+
     return response;
   } catch (error: any) {
     console.log(error.message);

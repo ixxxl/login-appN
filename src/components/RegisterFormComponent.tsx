@@ -1,4 +1,4 @@
-import { DisplaySettings } from "@mui/icons-material";
+import { DisplaySettings, FormatShapes } from "@mui/icons-material";
 import { Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -32,22 +32,40 @@ const RegisterFormComponent = () => {
   const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
     console.log(data);
     setFormDataState(data);
-    const method = "GET";
+    let method = "GET";
     const url = "http://localhost:3030/users/";
     const payLoad = formDataState;
-    const val = { method, url, payLoad };
-    const callData = axiosData(val);
+    const get = { method, url, payLoad };
+    console.log(payLoad);
 
-    callData.then((responseData) => {
+    axiosData(get).then((responseData) => {
       console.log(data.login);
-      console.log();
-      const currentUser = responseData.data.filter((user: string) => {
-        user === data.login;
+      let currentUser;
+      responseData.data.map((user: any) => {
+        currentUser = user.login;
       });
-      console.log(currentUser);
-      if (responseData.data.login === data.login) {
+      if (currentUser === data.login) {
+        console.log("User exist");
       } else {
-        <pre>{JSON.stringify(responseData.data, null, 2)}</pre>;
+        method = "POST";
+        console.log(formDataState);
+        const post = { method, url, formDataState };
+        // axiosData(post).then((responseData) => {
+        //   console.log(responseData);
+        // });
+
+        (async () => {
+          try {
+            const response: any = await axios.post(
+              "http://localhost:3030/users",
+              formDataState
+            );
+
+            console.log(response.data);
+          } catch (error: any) {
+            console.log(error.message);
+          }
+        })();
       }
     });
   };

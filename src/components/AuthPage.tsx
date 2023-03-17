@@ -1,6 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { Link, NavLink, Outlet, Route, Routes } from "react-router-dom";
+import { Form, Link, NavLink, Outlet, Route, Routes } from "react-router-dom";
+import { FormComponent } from "./StartComponnet";
 import LoginFormComponent from "./LoginFormComponent";
 import RegisterFormComponent from "./RegisterFormComponent";
 
@@ -21,7 +22,7 @@ export const AuthPage: React.FC = () => {
         </Button>
       </div>
       <Routes>
-        {/* <Route path="/" element={<AuthPage />} /> */}
+        <Route path="/" element={<FormComponent />} />
         <Route
           path="/login"
           element={
@@ -30,7 +31,7 @@ export const AuthPage: React.FC = () => {
         />
         <Route path="/register" element={<RegisterFormComponent />} />
       </Routes>
-      <Outlet />
+      {/* <Outlet /> */}
     </div>
   );
 };
