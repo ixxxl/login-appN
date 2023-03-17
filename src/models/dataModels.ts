@@ -1,18 +1,21 @@
 import axios from "axios";
+import { useState } from "react";
 
-export enum EData {
-  method = "",
-  url = "http://localhost:3030/users",
-  data = "",
+export interface IAxios {
+  method: string;
+  url: string;
+  data?: any;
 }
 
-export const axiosData = async (value: EData) => {
+export const axiosData = async (value: IAxios) => {
   try {
     const response: any = await axios({
-      method: EData.method,
-      url: EData.url,
-      data: EData.data,
+      method: value.method,
+      url: value.url,
+      data: value.data ? value.data : null,
     });
+    console.log(response);
+    return response;
   } catch (error: any) {
     console.log(error.message);
   }

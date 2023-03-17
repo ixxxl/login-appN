@@ -8,7 +8,7 @@ import {
   useForm,
   useFormState,
 } from "react-hook-form";
-import { axiosData } from "../models/dataModels";
+import { axiosData, IAxios } from "../models/dataModels";
 import {
   loginFormValidation,
   passwordFormValidation,
@@ -31,34 +31,25 @@ const RegisterFormComponent = () => {
 
   const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
     console.log(data);
-  };
-
-  // const postUser = async () => {
-  //   try {
-  //     const response: any = await axios.post("http://localhost:3030/users/");
-
-  //     response.data;
-  //   } catch (error: any) {
-  //     console.log(error.message);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (formDataState) {
-  //     async () => {
-  //       try {
-  //         const response: any = await axios.get("http://localhost:3030/users");
-  //         console.log(response.data);
-  //       } catch (error: any) {
-  //         console.log(error.message);
-  //       }
-  //     };
-  //   }
-  // }, [formDataState]);
-
-  const onSubmitRegistration: SubmitHandler<IFieldsAuth> = (data) => {
     setFormDataState(data);
-    console.log(data);
+    const method = "GET";
+    const url = "http://localhost:3030/users/";
+    const payLoad = formDataState;
+    const val = { method, url, payLoad };
+    const callData = axiosData(val);
+
+    callData.then((responseData) => {
+      console.log(data.login);
+      console.log();
+      const currentUser = responseData.data.filter((user: string) => {
+        user === data.login;
+      });
+      console.log(currentUser);
+      if (responseData.data.login === data.login) {
+      } else {
+        <pre>{JSON.stringify(responseData.data, null, 2)}</pre>;
+      }
+    });
   };
 
   return (
@@ -139,6 +130,7 @@ const RegisterFormComponent = () => {
             />
           )}
         />
+
         <Button type="submit" onClick={handleSubmit(onSubmit)}>
           Зарегистрироваться
         </Button>

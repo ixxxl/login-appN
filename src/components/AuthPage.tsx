@@ -10,33 +10,13 @@ enum ERegistr {
 }
 
 export const AuthPage: React.FC = () => {
-  // const [registartionState, setRegistartionState] = useState<ERegistr | null>(
-  //   null
-  // );
-
-  // const onClickRegisterHanlder = () => {
-  //   setRegistartionState(ERegistr.registr);
-  // };
-
-  // const onClickLoginHandler = () => {
-  //   setRegistartionState(ERegistr.login);
-  // };
-
   return (
     <div className="auth-page ">
       <div className="auth-btn">
-        <Button
-          component={Link}
-          to="/register"
-          // onClick={onClickRegisterHanlder}
-        >
+        <Button component={Link} to="/register">
           Регистрация
         </Button>
-        <Button
-          component={Link}
-          to="/login"
-          // onClick={onClickLoginHandler}
-        >
+        <Button component={Link} to="/login">
           Войти
         </Button>
       </div>
@@ -46,24 +26,11 @@ export const AuthPage: React.FC = () => {
           path="/login"
           element={
             <LoginFormComponent login="" password="" confirmPassword="" />
-            // ERegistr.login && (
-            //   <LoginFormComponent login="" password="" confirmPassword="" />
-            // )
           }
         />
-        <Route
-          path="/register"
-          element={<RegisterFormComponent />} //ERegistr.registr && <RegisterFormComponent />
-        />
+        <Route path="/register" element={<RegisterFormComponent />} />
       </Routes>
       <Outlet />
-      {/* {registartionState === ERegistr.login ? (
-        <LoginFormComponent login="" password="" confirmPassword="" />
-      ) : registartionState === ERegistr.registr ? (
-        <RegisterFormComponent />
-      ) : (
-        ""
-      )} */}
     </div>
   );
 };
