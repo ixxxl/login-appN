@@ -30,43 +30,44 @@ const RegisterFormComponent = () => {
   const [formDataState, setFormDataState] = useState<IFieldsAuth | null>(null);
 
   const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
-    console.log(data);
     setFormDataState(data);
+    let currentUser: boolean;
     let method = "GET";
     const url = "http://localhost:3030/users/";
     const payLoad = formDataState;
     const get = { method, url, payLoad };
-    console.log(payLoad);
 
     axiosData(get).then((responseData) => {
-      console.log(data.login);
-      let currentUser;
-      responseData.data.map((user: any) => {
-        currentUser = user.login;
+      // console.log(data.login);
+      responseData.data.filter((user: any) => {
+        if (user.login == data.login) {
+          currentUser = false;
+          console.log("User exist");
+        } else {
+          currentUser = true; //? when to create, formDataState empty
+        }
       });
-      if (currentUser === data.login) {
-        console.log("User exist");
-      } else {
+      console.log(currentUser, data.login);
+      if (currentUser) {
         method = "POST";
-        console.log(formDataState);
         const post = { method, url, formDataState };
-        // axiosData(post).then((responseData) => {
-        //   console.log(responseData);
-        // });
-
-        (async () => {
-          try {
-            const response: any = await axios.post(
-              "http://localhost:3030/users",
-              formDataState
-            );
-
-            console.log(response.data);
-          } catch (error: any) {
-            console.log(error.message);
-          }
-        })();
+        axiosData(post).then((responseData) => {
+          console.log(responseData);
+        });
       }
+
+      // (async () => {
+      //   try {
+      //     const response: any = await axios.post(
+      //       "http://localhost:3030/users",
+      //       formDataState
+      //     );
+
+      //     console.log(response.data);
+      //   } catch (error: any) {
+      //     console.log(error.message);
+      //   }
+      // })();
     });
   };
 
