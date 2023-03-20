@@ -32,9 +32,8 @@ const LoginFormComponent = (props: IFieldsAuth) => {
   const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
     let currentUser: string;
     let currentUserPassword: string;
-    const method = "GET";
-    const url = "http://localhost:3030/users/";
-    const get = { method, url };
+
+    const get = { method: "GET", url: "http://localhost:3030/users/" };
     axiosData(get).then((responseData) => {
       responseData.data.map((user: any) => {
         if (user.login === data.login) {

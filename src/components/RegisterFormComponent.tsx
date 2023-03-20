@@ -24,6 +24,7 @@ const RegisterFormComponent = () => {
   const { handleSubmit, reset, control, watch } = useForm<IFieldsAuth>({
     mode: "onBlur",
   });
+  const [userStatus, setUserStatus] = useState<string>("");
 
   const { errors } = useFormState({ control });
 
@@ -32,27 +33,37 @@ const RegisterFormComponent = () => {
   const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
     setFormDataState(data);
     let currentUser: boolean;
-    let method = "GET";
-    const url = "http://localhost:3030/users/";
-    const payLoad = formDataState;
-    const get = { method, url, payLoad };
+
+    const get = {
+      method: "GET",
+      url: "http://localhost:3030/users/",
+      data: formDataState,
+    };
 
     axiosData(get).then((responseData) => {
       // console.log(data.login);
       responseData.data.filter((user: any) => {
         if (user.login == data.login) {
           currentUser = false;
-          console.log("User exist");
+          setUserStatus("Пользователь с таким логином уже существует");
         } else {
-          currentUser = true; //? when to create, formDataState empty
+          currentUser = true;
         }
       });
-      console.log(currentUser, data.login);
-      if (currentUser) {
-        method = "POST";
-        const post = { method, url, formDataState };
+      //console.log(currentUser, data.login,formDataState);
+      if (currentUser && formDataState) {
+        const post = {
+          method: "POST",
+          url: "http://localhost:3030/users/",
+          data: formDataState,
+        };
         axiosData(post).then((responseData) => {
           console.log(responseData);
+          if (responseData.status === 201) {
+            setUserStatus("Пользователь создан");
+          } else {
+            setUserStatus(responseData.error);
+          }
         });
       }
 
@@ -153,6 +164,7 @@ const RegisterFormComponent = () => {
         <Button type="submit" onClick={handleSubmit(onSubmit)}>
           Зарегистрироваться
         </Button>
+        {userStatus && userStatus}
       </form>
     </div>
   );
