@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-export const FormComponent: React.FC = () => {
+export const StartComponnet: React.FC = () => {
   return (
     <div>
       <Outlet />

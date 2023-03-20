@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { axiosData } from "../models/dataModels";
 import { AuthPage } from "./AuthPage";
+import { StartComponnet } from "./StartComponnet";
 
 export const UserAfterComponent = () => {
   const canvasRef = useRef(null);
@@ -35,7 +36,7 @@ export const UserAfterComponent = () => {
     if (dataURL) {
       const post = {
         method: "POST",
-        url: "http://localhost:3030/pictures/",
+        url: "http://localhost:3030/users/",
         data: dataURL,
       };
       axiosData(post).then((response) => {
@@ -46,6 +47,7 @@ export const UserAfterComponent = () => {
 
   const signOutHandler = () => {
     if (window.confirm("Вы хотите выйти из системы?")) {
+        console.log(`confirm true`);
       confirmation = true;
     }
   };
@@ -55,7 +57,7 @@ export const UserAfterComponent = () => {
       <canvas style={{ border: "1px solid silver" }} ref={canvasRef} />
       <Button onClick={submitHandler}>Save</Button>
       <Button onClick={signOutHandler}>Выйти</Button>
-      {confirmation && <AuthPage />}
+      {confirmation && <StartComponnet />}
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import { Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Form, Link, NavLink, Outlet, Route, Routes } from "react-router-dom";
-import { FormComponent } from "./StartComponnet";
+
 import LoginFormComponent from "./LoginFormComponent";
 import RegisterFormComponent from "./RegisterFormComponent";
+import { StartComponnet } from "./StartComponnet";
 
 enum ERegistr {
   registr = "registr",
@@ -22,8 +23,13 @@ export const AuthPage: React.FC = () => {
         </Button>
       </div>
       <Routes>
-        <Route path="/" element={<FormComponent />} />
-        <Route path="/login" element={<LoginFormComponent login="" password="" confirmPassword="" />} />
+        <Route path="/" element={<StartComponnet />} />
+        <Route
+          path="/login"
+          element={
+            <LoginFormComponent login="" password="" confirmPassword="" />
+          }
+        />
         <Route path="/register" element={<RegisterFormComponent />} />
       </Routes>
       {/* <Outlet /> */}
