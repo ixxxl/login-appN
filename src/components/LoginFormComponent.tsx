@@ -13,6 +13,7 @@ import {
   loginFormValidation,
   passwordFormValidation,
 } from "./FormValidationComponent";
+import { AuthForm, AuthFormSubtitle } from "./StyleComponent";
 import { UserAfterComponent } from "./UserAfterLoginComponent";
 
 interface IFieldsAuth {
@@ -52,18 +53,13 @@ const LoginFormComponent = (props: IFieldsAuth) => {
   };
 
   return (
-    <div className="auth-form">
+    <AuthForm>
       <Typography variant="h4" component="h4" className="auth">
         Войдите
       </Typography>
-      <Typography
-        variant="subtitle1"
-        component="div"
-        gutterBottom={true}
-        className="auth-form_subtitle"
-      >
+      <AuthFormSubtitle variant="subtitle1">
         Чтобы получить доступ
-      </Typography>
+      </AuthFormSubtitle>
       <form className="auth-form__form">
         <Controller
           control={control}
@@ -112,7 +108,7 @@ const LoginFormComponent = (props: IFieldsAuth) => {
       ) : (
         ""
       )}
-    </div>
+    </AuthForm>
   );
 };
 

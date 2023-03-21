@@ -1,10 +1,12 @@
 import { Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Form, Link, NavLink, Outlet, Route, Routes } from "react-router-dom";
+import styled from "styled-components";
 
 import LoginFormComponent from "./LoginFormComponent";
 import RegisterFormComponent from "./RegisterFormComponent";
 import { StartComponnet } from "./StartComponnet";
+import { AuthBtn, BackGround } from "./StyleComponent";
 
 enum ERegistr {
   registr = "registr",
@@ -13,15 +15,15 @@ enum ERegistr {
 
 export const AuthPage: React.FC = () => {
   return (
-    <div className="auth-page ">
-      <div className="auth-btn">
+    <BackGround>
+      <AuthBtn>
         <Button component={Link} to="/register">
           Регистрация
         </Button>
         <Button component={Link} to="/login">
           Войти
         </Button>
-      </div>
+      </AuthBtn>
       <Routes>
         <Route path="/" element={<StartComponnet />} />
         <Route
@@ -33,6 +35,6 @@ export const AuthPage: React.FC = () => {
         <Route path="/register" element={<RegisterFormComponent />} />
       </Routes>
       {/* <Outlet /> */}
-    </div>
+    </BackGround>
   );
 };

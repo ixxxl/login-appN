@@ -1,14 +1,15 @@
 import { Podcasts, PodcastsOutlined } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { axiosData } from "../models/dataModels";
 import { AuthPage } from "./AuthPage";
 import { StartComponnet } from "./StartComponnet";
+import { Canvas } from "./StyleComponent";
 
 export const UserAfterComponent = () => {
   const canvasRef = useRef(null);
   let canvas: any;
-  let confirmation: boolean = false;
+  const [confirmation, setConfirmation] = useState<boolean>(false);
 
   useEffect(() => {
     canvas = canvasRef.current;
@@ -47,18 +48,18 @@ export const UserAfterComponent = () => {
 
   const signOutHandler = () => {
     if (window.confirm("Вы хотите выйти из системы?")) {
-        console.log(`confirm true`);
-      confirmation = true;
+      console.log(`confirm true`);
+      setConfirmation(true);
     }
   };
   return (
-    <div className="canvas">
+    <Canvas>
       <div>USER CHAT</div>
       <canvas style={{ border: "1px solid silver" }} ref={canvasRef} />
       <Button onClick={submitHandler}>Save</Button>
       <Button onClick={signOutHandler}>Выйти</Button>
-      {confirmation && <StartComponnet />}
-    </div>
+      {confirmation && <AuthPage />}
+    </Canvas>
   );
 };
 //https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL

@@ -13,6 +13,7 @@ import {
   loginFormValidation,
   passwordFormValidation,
 } from "./FormValidationComponent";
+import { AuthForm, AuthFormSubtitle, AuthForm__Form } from "./StyleComponent";
 
 interface IFieldsAuth {
   login: string;
@@ -83,19 +84,12 @@ const RegisterFormComponent = () => {
   };
 
   return (
-    <div className="auth-form">
-      <Typography variant="h4" component="h4" className="auth">
-        Зарегистрируйтесь
-      </Typography>
-      <Typography
-        variant="subtitle1"
-        component="div"
-        gutterBottom={true}
-        className="auth-form_subtitle"
-      >
+    <AuthForm>
+      <Typography variant="h4">Зарегистрируйтесь</Typography>
+      <AuthFormSubtitle variant="subtitle1">
         Чтобы создать учетную запись
-      </Typography>
-      <form className="auth-form__form">
+      </AuthFormSubtitle>
+      <AuthForm__Form>
         <Controller
           control={control}
           name="login"
@@ -165,8 +159,8 @@ const RegisterFormComponent = () => {
           Зарегистрироваться
         </Button>
         {userStatus && userStatus}
-      </form>
-    </div>
+      </AuthForm__Form>
+    </AuthForm>
   );
 };
 
