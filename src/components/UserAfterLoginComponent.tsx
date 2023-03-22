@@ -34,13 +34,14 @@ export const UserAfterComponent = () => {
 
   const submitHandler = () => {
     const dataURL = canvas.toDataURL();
+    const userId = localStorage.getItem("currentUserId");
     if (dataURL) {
-      const post = {
-        method: "POST",
-        url: "http://localhost:3030/users/",
-        data: dataURL,
+      const put = {
+        method: "PUT",
+        url: `http://localhost:3030/users/${userId}`,
+        data: { dataURL },
       };
-      axiosData(post).then((response) => {
+      axiosData(put).then((response) => {
         console.log(response);
       });
     }

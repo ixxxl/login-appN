@@ -20,9 +20,12 @@ export const AuthPage: React.FC = () => {
         <Button component={Link} to="/register">
           Регистрация
         </Button>
-        <Button component={Link} to="/login">
+        <Button component={Link} to="/login/">
           Войти
         </Button>
+        {/* <Button component={Link} to="/">
+          Выйти
+        </Button> */}
       </AuthBtn>
       <Routes>
         <Route path="/" element={<StartComponnet />} />

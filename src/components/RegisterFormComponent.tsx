@@ -14,6 +14,7 @@ import {
   passwordFormValidation,
 } from "./FormValidationComponent";
 import { AuthForm, AuthFormSubtitle, AuthForm__Form } from "./StyleComponent";
+import { UserAfterComponent } from "./UserAfterLoginComponent";
 
 interface IFieldsAuth {
   login: string;

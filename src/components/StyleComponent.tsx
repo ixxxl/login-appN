@@ -8,7 +8,7 @@ export const BackGround = styled.div`
 
 export const AuthForm = styled.div`
   width: 100vh;
-  height: 100vh;
+  height: 88vh;
   background-color: bisque;
   padding: 20px;
   display: flex;
@@ -16,6 +16,7 @@ export const AuthForm = styled.div`
   justify-content: flex-start;
   align-items: center;
 `;
+
 export const AuthFormSubtitle = styled(Typography)`
 && {
   color: rgb(100, 180, 180);

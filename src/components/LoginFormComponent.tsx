@@ -13,13 +13,14 @@ import {
   loginFormValidation,
   passwordFormValidation,
 } from "./FormValidationComponent";
-import { AuthForm, AuthFormSubtitle } from "./StyleComponent";
+import { AuthForm, AuthFormSubtitle, AuthForm__Form } from "./StyleComponent";
 import { UserAfterComponent } from "./UserAfterLoginComponent";
 
 interface IFieldsAuth {
   login: string;
   password: string;
   confirmPassword: string;
+  id?: number;
 }
 
 const LoginFormComponent = (props: IFieldsAuth) => {
@@ -40,6 +41,8 @@ const LoginFormComponent = (props: IFieldsAuth) => {
         if (user.login === data.login) {
           currentUser = user.login;
           currentUserPassword = user.password;
+          console.log(user.id);
+          localStorage.setItem("currentUserId", user.id);
         }
       });
 
@@ -60,7 +63,7 @@ const LoginFormComponent = (props: IFieldsAuth) => {
       <AuthFormSubtitle variant="subtitle1">
         Чтобы получить доступ
       </AuthFormSubtitle>
-      <form className="auth-form__form">
+      <AuthForm__Form>
         <Controller
           control={control}
           name="login"
@@ -100,7 +103,7 @@ const LoginFormComponent = (props: IFieldsAuth) => {
         <Button type="submit" onClick={handleSubmit(onSubmit)}>
           Войти
         </Button>
-      </form>
+      </AuthForm__Form>
       {loginCurrentUser === true ? (
         <UserAfterComponent />
       ) : loginCurrentUser === false ? (
