@@ -16,19 +16,31 @@ import {
 import { AuthForm, AuthFormSubtitle, AuthForm__Form } from "./StyleComponent";
 import { UserAfterComponent } from "./UserAfterLoginComponent";
 
-interface IFieldsAuth {
+export interface IFieldsAuth {
   login: string;
   password: string;
   confirmPassword: string;
 }
 
 const RegisterFormComponent = () => {
-  const { handleSubmit, reset, control, watch } = useForm<IFieldsAuth>({
-    mode: "onBlur",
-  });
+  const { handleSubmit, reset, control, watch, trigger } = useForm<IFieldsAuth>(
+    {
+      mode: "onBlur",
+    }
+  );
   const [userStatus, setUserStatus] = useState<string>("");
 
   const { errors } = useFormState({ control });
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      if (value.password !== value.confirmPassword) {
+        trigger();
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const [formDataState, setFormDataState] = useState<IFieldsAuth | null>(null);
 
@@ -45,7 +57,7 @@ const RegisterFormComponent = () => {
     axiosData(get).then((responseData) => {
       // console.log(data.login);
       responseData.data.filter((user: any) => {
-        if (user.login == data.login) {
+        if (user.login === data.login) {
           currentUser = false;
           setUserStatus("Пользователь с таким логином уже существует");
         } else {
@@ -63,6 +75,7 @@ const RegisterFormComponent = () => {
           console.log(responseData);
           if (responseData.status === 201) {
             setUserStatus("Пользователь создан");
+            reset();
           } else {
             setUserStatus(responseData.error);
           }
@@ -159,6 +172,7 @@ const RegisterFormComponent = () => {
         <Button type="submit" onClick={handleSubmit(onSubmit)}>
           Зарегистрироваться
         </Button>
+
         {userStatus && userStatus}
       </AuthForm__Form>
     </AuthForm>
