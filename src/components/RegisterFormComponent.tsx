@@ -13,46 +13,72 @@ import {
   loginFormValidation,
   passwordFormValidation,
 } from "./FormValidationComponent";
+import { AuthForm, AuthFormSubtitle, AuthForm__Form } from "./StyleComponent";
+import { UserAfterComponent } from "./UserAfterLoginComponent";
 
-interface IFieldsAuth {
+export interface IFieldsAuth {
   login: string;
   password: string;
   confirmPassword: string;
 }
 
 const RegisterFormComponent = () => {
-  const { handleSubmit, reset, control, watch } = useForm<IFieldsAuth>({
-    mode: "onBlur",
-  });
+  const { handleSubmit, reset, control, watch, trigger } = useForm<IFieldsAuth>(
+    {
+      mode: "onBlur",
+    }
+  );
+  const [userStatus, setUserStatus] = useState<string>("");
 
   const { errors } = useFormState({ control });
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      if (value.password !== value.confirmPassword) {
+        trigger();
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const [formDataState, setFormDataState] = useState<IFieldsAuth | null>(null);
 
   const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
     setFormDataState(data);
     let currentUser: boolean;
-    let method = "GET";
-    const url = "http://localhost:3030/users/";
-    const payLoad = formDataState;
-    const get = { method, url, payLoad };
+
+    const get = {
+      method: "GET",
+      url: "http://localhost:3030/users/",
+      data: formDataState,
+    };
 
     axiosData(get).then((responseData) => {
       // console.log(data.login);
       responseData.data.filter((user: any) => {
-        if (user.login == data.login) {
+        if (user.login === data.login) {
           currentUser = false;
-          console.log("User exist");
+          setUserStatus("Пользователь с таким логином уже существует");
         } else {
-          currentUser = true; //? when to create, formDataState empty
+          currentUser = true;
         }
       });
-      console.log(currentUser, data.login);
-      if (currentUser) {
-        method = "POST";
-        const post = { method, url, formDataState };
+      //console.log(currentUser, data.login,formDataState);
+      if (currentUser && formDataState) {
+        const post = {
+          method: "POST",
+          url: "http://localhost:3030/users/",
+          data: formDataState,
+        };
         axiosData(post).then((responseData) => {
           console.log(responseData);
+          if (responseData.status === 201) {
+            setUserStatus("Пользователь создан");
+            reset();
+          } else {
+            setUserStatus(responseData.error);
+          }
         });
       }
 
@@ -72,19 +98,12 @@ const RegisterFormComponent = () => {
   };
 
   return (
-    <div className="auth-form">
-      <Typography variant="h4" component="h4" className="auth">
-        Зарегистрируйтесь
-      </Typography>
-      <Typography
-        variant="subtitle1"
-        component="div"
-        gutterBottom={true}
-        className="auth-form_subtitle"
-      >
+    <AuthForm>
+      <Typography variant="h4">Зарегистрируйтесь</Typography>
+      <AuthFormSubtitle variant="subtitle1">
         Чтобы создать учетную запись
-      </Typography>
-      <form className="auth-form__form">
+      </AuthFormSubtitle>
+      <AuthForm__Form>
         <Controller
           control={control}
           name="login"
@@ -153,8 +172,10 @@ const RegisterFormComponent = () => {
         <Button type="submit" onClick={handleSubmit(onSubmit)}>
           Зарегистрироваться
         </Button>
-      </form>
-    </div>
+
+        {userStatus && userStatus}
+      </AuthForm__Form>
+    </AuthForm>
   );
 };
 

@@ -13,12 +13,14 @@ import {
   loginFormValidation,
   passwordFormValidation,
 } from "./FormValidationComponent";
+import { AuthForm, AuthFormSubtitle, AuthForm__Form } from "./StyleComponent";
 import { UserAfterComponent } from "./UserAfterLoginComponent";
 
 interface IFieldsAuth {
   login: string;
   password: string;
   confirmPassword: string;
+  id?: number;
 }
 
 const LoginFormComponent = (props: IFieldsAuth) => {
@@ -32,14 +34,15 @@ const LoginFormComponent = (props: IFieldsAuth) => {
   const onSubmit: SubmitHandler<IFieldsAuth> = (data) => {
     let currentUser: string;
     let currentUserPassword: string;
-    const method = "GET";
-    const url = "http://localhost:3030/users/";
-    const get = { method, url };
+
+    const get = { method: "GET", url: "http://localhost:3030/users/" };
     axiosData(get).then((responseData) => {
       responseData.data.map((user: any) => {
         if (user.login === data.login) {
           currentUser = user.login;
           currentUserPassword = user.password;
+          console.log(user.id);
+          localStorage.setItem("currentUserId", user.id);
         }
       });
 
@@ -53,19 +56,14 @@ const LoginFormComponent = (props: IFieldsAuth) => {
   };
 
   return (
-    <div className="auth-form">
+    <AuthForm>
       <Typography variant="h4" component="h4" className="auth">
         Войдите
       </Typography>
-      <Typography
-        variant="subtitle1"
-        component="div"
-        gutterBottom={true}
-        className="auth-form_subtitle"
-      >
+      <AuthFormSubtitle variant="subtitle1">
         Чтобы получить доступ
-      </Typography>
-      <form className="auth-form__form">
+      </AuthFormSubtitle>
+      <AuthForm__Form>
         <Controller
           control={control}
           name="login"
@@ -105,7 +103,7 @@ const LoginFormComponent = (props: IFieldsAuth) => {
         <Button type="submit" onClick={handleSubmit(onSubmit)}>
           Войти
         </Button>
-      </form>
+      </AuthForm__Form>
       {loginCurrentUser === true ? (
         <UserAfterComponent />
       ) : loginCurrentUser === false ? (
@@ -113,7 +111,7 @@ const LoginFormComponent = (props: IFieldsAuth) => {
       ) : (
         ""
       )}
-    </div>
+    </AuthForm>
   );
 };
 

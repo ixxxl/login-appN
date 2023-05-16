@@ -37,11 +37,11 @@
   }
 }
 
-.auth-page {
+/* .auth-page {
   height: 100vh;
   background: no-repeat url(../public/low_poly_banner_design_1711.jpg);
-}
-.auth-form {
+} */
+/* .auth-form {
   width: 100vh;
   height: 100vh;
   background-color: bisque;
@@ -74,5 +74,5 @@
   background-color: rgb(226, 129, 11);
   display: flex;
   flex-direction: column;
-  justify-content: left;
-}
+  justify-content: right;
+} */
