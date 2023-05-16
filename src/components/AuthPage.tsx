@@ -41,3 +41,6 @@ export const AuthPage: React.FC = () => {
     </BackGround>
   );
 };
+
+
+https://meet.google.com/gsv-dtda-chy
