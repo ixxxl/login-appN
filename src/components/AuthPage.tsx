@@ -43,4 +43,4 @@ export const AuthPage: React.FC = () => {
 };
 
 
-https://meet.google.com/gsv-dtda-chy
+
